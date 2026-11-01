@@ -30,6 +30,18 @@ Read first: `docs/vision.md`, `docs/styleguide.md`. Decisions: `docs/adr/`.
 5. An issue is closed only when its "Done when" holds. If it can't hold yet, leave it open and
    say what it waits on.
 
+## What every issue carries
+
+The issue is the worker's whole brief. Owner's call at the morning-digest split (2026-11-01):
+
+1. First line `Source: plan.md § <n>`; label `plan:<plan>` (the plan's frontmatter `plan:`).
+2. `## Goal`: the plan's section, quoted.
+3. `## Scope`: the files to change. `Don't touch:` `runs/`, `.env`, files of other open issues.
+4. `## Done when`: the plan's line word for word, plus the check (`pnpm test && pnpm typecheck`).
+5. `## Blocked by`: `#n` or `—`. A step that waits on someone outside (a review) names them, and
+   stays open until they confirm.
+6. `## Worker`: model · effort, and the closing comment above.
+
 ## Skills
 
 Shared skills live in `.agents/skills/`, one folder each, `SKILL.md` inside. That folder is the
