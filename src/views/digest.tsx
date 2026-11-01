@@ -38,7 +38,11 @@ export function DigestTable({ digest }: { digest: NightDigest }) {
           </tbody>
         </table>
       )}
-      {digest.badLines > 0 && <p class="mute">{digest.badLines} lines did not parse</p>}
+      {digest.badLines > 0 && (
+        <p class="mute">
+          {digest.badLines} {digest.badLines === 1 ? 'line' : 'lines'} did not parse
+        </p>
+      )}
     </>
   );
 }
