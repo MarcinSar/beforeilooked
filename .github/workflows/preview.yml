@@ -1,0 +1,42 @@
+# Plan morning-digest § 3 and § 4 (ADR 0003): one HTML copy of /digest/2026-10-28 on GitHub Pages.
+# Manual only, so a push never publishes. The banner's marker comes from the repo secret
+# LANE_MARKER. To take it off: delete the secret and run this again (same link, "no marker set").
+name: preview
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+        with:
+          version: 10.30.3
+          cache: true
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      - run: pnpm install --frozen-lockfile
+      - name: Save /digest/2026-10-28
+        run: pnpm preview:save
+        env:
+          LANE_MARKER: ${{ secrets.LANE_MARKER }}
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: var/preview
+      - id: deployment
+        uses: actions/deploy-pages@v5
